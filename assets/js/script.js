@@ -34,7 +34,7 @@ var taskFormHandler = function (event){
     var createTaskEl = function(taskDataObj) {
         
     //create list item
-    var listItemEl = document. createElement("li");
+    var listItemEl = document.createElement("li");
     listItemEl.className="task-item";
         
     //add task id as a custom attribute
@@ -70,7 +70,7 @@ var taskFormHandler = function (event){
         editButtonEl.className= "btn edit-btn";
         editButtonEl.setAttribute("data-task-id", taskId);
     
-    actionContainerEl.appendChild(editButtonE1);
+    actionContainerEl.appendChild(editButtonEl);
         
     //create delete button
     var deleteButtonEl=document.createElement("button");
