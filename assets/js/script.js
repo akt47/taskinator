@@ -16,7 +16,7 @@ var taskFormHandler = function (event){
     //package up data as an object 
     var taskDataObj = {
         name: taskNameInput,
-        type: taskTypeInput
+        type: taskTypeInput,
     };
     
     //check if input values are empty strings
@@ -25,7 +25,7 @@ var taskFormHandler = function (event){
         return false;
     }
     
-    fornEl.reset();
+    formEl.reset();
     
     //send it as an argument to createTaskEl
     createTaskEl(taskDataObj);
@@ -62,7 +62,7 @@ var taskFormHandler = function (event){
     var createTaskActions = function(taskId) {
         
     var actionContainerEl = document.createElement("div");
-    actionContainerEl.className= "task=actions";
+    actionContainerEl.className= "task-actions";
         
     //create edit button
     var editButtonEl = document.createElement("button");
