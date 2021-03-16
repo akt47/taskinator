@@ -4,6 +4,8 @@ var tasksToDoEl = document.querySelector("#tasks-to-do");
 
 var taskIdCounter = 0;
 
+var pageContentEl = document.querySelector("#page-content");
+
 
 //important to place this before the eventlistener
 
@@ -104,4 +106,9 @@ var taskFormHandler = function (event){
 // type of event we'll listen for and the event response to execute when the even is triggered. 
 //create a new task, styled the task item, add the text, append this element to task list. These 4 steps are key. 
 formEl.addEventListener("submit", taskFormHandler); 
+
+var taskButtonHandler = function(event) {
+    console.log(event.target);
+};
    
+pageContentEl.addEventListener("click", taskButtonHandler);
