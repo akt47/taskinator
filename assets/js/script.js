@@ -161,6 +161,7 @@ var completedEditTask = function(taskName, taskType, taskId) {
     taskSelected.querySelector("h3.task-name").textContent = taskName;
     taskSelected.querySelector("span.task-type").textContent = taskType;
     
+    alert("Task Updated!");
     
     formEl.removeAttribute("data-task-id");
     document.querySelector("#save-task").textContent ="Add Task";
@@ -189,7 +190,7 @@ var taskButtonHandler = function(event) {
 
 var taskStatusChangeHandler = function (event) {
     //get the task item's id
-    var taskID= event.target.getAttribute("data-task-id");
+    var taskId= event.target.getAttribute("data-task-id");
     //get the currently selected options value and convert to lowercase
     var statusValue = event.target.value.toLowerCase();
     //find the parent task item element based on id
