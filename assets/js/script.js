@@ -45,7 +45,7 @@ var taskFormHandler = function (event){
     };
         createTaskEl(taskDataObj);
     } 
-   
+};
 
     var createTaskEl = function(taskDataObj) {
         
