@@ -82,6 +82,10 @@ var taskFormHandler = function (event){
         
     actionContainerEl.appendChild(deleteButtonEl);
         
+        var deleteTask=function(taskId) {
+        var taskSelected=document.querySelector(".task-item[data-task-id='" + taskId + "']");
+        taskSelected.remove();
+    };
    
     var statusSelectEl = document.createElement("select");
     statusSelectEl.className="select-status";
@@ -104,10 +108,7 @@ var taskFormHandler = function (event){
     return actionContainerEl;
     }
     
- var deleteTask=function(taskId) {
-        var taskSelected=document.querySelector(".task-item[data-task-id='" + taskId + "']");
-        taskSelected.remove();
-    };
+
 
 // type of event we'll listen for and the event response to execute when the even is triggered. 
 //create a new task, styled the task item, add the text, append this element to task list. These 4 steps are key. 
