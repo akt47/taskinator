@@ -49,8 +49,6 @@ var taskFormHandler = function (event){
 };
 
     var createTaskEl = function(taskDataObj) {
-        console.log(taskDataObj);
-        console.log(taskDataObj.status);
         
     //create list item
     var listItemEl = document.createElement("li");
@@ -234,8 +232,12 @@ var taskStatusChangeHandler = function (event) {
             tasks[i].status = statusValue;
         }
     }
-    console.log(tasks);
 };
    
+var saveTasks = function () {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+
 pageContentEl.addEventListener("click", taskButtonHandler);
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
