@@ -81,6 +81,11 @@ var taskFormHandler = function (event){
         deleteButtonEl.setAttribute("data-task-id", taskId);
         
     actionContainerEl.appendChild(deleteButtonEl);
+        
+    var deleteTask=function(taskId) {
+        var taskSelected=document.querySelector(".task-item[data-task-id='" + taskId + "']");
+        taskSelected.remove();
+    };
 
     var statusSelectEl = document.createElement("select");
     statusSelectEl.className="select-status";
@@ -109,6 +114,12 @@ formEl.addEventListener("submit", taskFormHandler);
 
 var taskButtonHandler = function(event) {
     console.log(event.target);
+    
+    if (event.target.matches(".delete-btn")) {
+        //get the elements task id
+        var taskId= event.target.getAttribute("data-task-id);
+        deleteTask(taskId);
+    }
 };
    
 pageContentEl.addEventListener("click", taskButtonHandler);
