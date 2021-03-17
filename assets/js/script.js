@@ -113,7 +113,7 @@ var taskFormHandler = function (event){
       var editTask = function(taskId) {
           
           //get task list item element
-          var taskSelected = document.querySelector(".task-item[data-task-id'" + taskId + "']");
+          var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
     
 
          //get content from task name and type
