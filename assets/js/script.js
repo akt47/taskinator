@@ -1,41 +1,37 @@
 var formEl = document.querySelector("#task-form");
-
 var tasksToDoEl = document.querySelector("#tasks-to-do");
-
 var taskIdCounter = 0;
-
 var pageContentEl = document.querySelector("#page-content");
-
 var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 var tasksCompletedEl = document.querySelector("#tasks-completed");
-
+// create array to hold tasks for saving 
 var tasks = [];
 
 //important to place this before the eventlistener
 
 var taskFormHandler = function (event){
-    
     event.preventDefault();
     var taskNameInput = document.querySelector("input[name='task-name']").value;
-    var taskTypeInput= document.querySelector("select[name='task-type']").value;
+    var taskTypeInput = document.querySelector("select[name='task-type']").value;
     
-     
     //check if input values are empty strings
     if (!taskNameInput || !taskTypeInput) {
         alert("You need to fill out the task form!");
         return false;
     }
-    
-    formEl.reset();
   
     var isEdit = formEl.hasAttribute("data-task-id");
+
+    var taskDataObj = {
+        name: taskNameInput,
+        type: taskTypeInput,
+    }
     
     // has data attribute, so get task id and call function to complete edit process
     if (isEdit) {
-        var taskId=formEl.getAttribute("data-task-id");
+        var taskId = formEl.getAttribute("data-task-id");
         completeEditTask(taskNameInput, taskTypeInput, taskId);
     }
-    
     //no data attribute, so create object as normal and pass to createTaskEl function
     else {
     //package up data as an object 
@@ -43,7 +39,7 @@ var taskFormHandler = function (event){
         name: taskNameInput,
         type: taskTypeInput,
         status: "to do"
-    }
+    };
         createTaskEl(taskDataObj);
     } 
 };
@@ -133,7 +129,7 @@ var taskFormHandler = function (event){
         //loop through current tasks
         for (var i =0; i <tasks.length; i++) {
             //if tasks [i].id doesnt match the value of taskId, lets keep that task and push it into the new array
-            if (tasks[i].id !== parseInt(tasKId)) {
+            if (tasks[i].id !== parseInt(taskId)) {
                 updatedTaskArr.push(tasks[i]);
             }
         }
@@ -142,17 +138,19 @@ var taskFormHandler = function (event){
         tasks= updatedTaskArr;
     };
 
-      var editTask = function(taskId) {
+var editTask = function(taskId) {
           
           //get task list item element
           var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
     
 
          //get content from task name and type
-          var taskName=taskSelected.querySelector("h3.task-name").textContent;
+          var taskName = taskSelected.querySelector("h3.task-name").textContent;
+          console.log(taskName);
          
 
           var taskType = taskSelected.querySelector("span.task-type").textContent;
+          console.log(taskType);
          
      
 
@@ -164,7 +162,7 @@ var taskFormHandler = function (event){
       formEl.setAttribute("data-task-id", taskId);
       };
 
-var completedEditTask = function(taskName, taskType, taskId) {
+var completeEditTask = function(taskName, taskType, taskId) {
    
     // find the matching task list item
     var taskSelected = document.querySelector(".task-item[data-task-id=' " + taskId + " ']");
@@ -173,36 +171,45 @@ var completedEditTask = function(taskName, taskType, taskId) {
     taskSelected.querySelector("h3.task-name").textContent = taskName;
     taskSelected.querySelector("span.task-type").textContent = taskType;
 
+
     //loop through tasks array and task object with new content
     for (var i=0; i< tasks.length; i++) {
         if (tasks[i].id === parseInt(taskId)) {
             tasks[i].name = taskName;
             tasks[i].type = taskType;
         }
-    };
-    
+    }
+
     alert("Task Updated!");
-    
     formEl.removeAttribute("data-task-id");
     document.querySelector("#save-task").textContent ="Add Task";
+
+
+    saveTasks();
+    
+
 };
 // type of event we'll listen for and the event response to execute when the even is triggered. 
 //create a new task, styled the task item, add the text, append this element to task list. These 4 steps are key. 
-formEl.addEventListener("submit", taskFormHandler); 
-
+formEl.addEventListener("submit", taskFormHandler); {
+    var listItemEl = document.createElement ("li");
+    listItemEl.className = "task-item";
+}
 var taskButtonHandler = function(event) {
    //get target element from event
     var targetEl= event.target;
     
     //edit button was clicked
-    if (targetEl.matches(".edit-btn")) {
+    if (targetEl.matches(".edit-btn")) 
+    {
         var taskId = targetEl.getAttribute("data-task-id");
         editTask(taskId);
     }
     
     //delete button was clicked
     
-   else if (targetEl.matches(".delete-btn")) {
+   else if (targetEl.matches(".delete-btn")) 
+   {
         var taskId= targetEl.getAttribute("data-task-id");
         deleteTask(taskId);
     }
@@ -232,10 +239,29 @@ var taskStatusChangeHandler = function (event) {
             tasks[i].status = statusValue;
         }
     }
+    saveTasks();
 };
    
 var saveTasks = function () {
     localStorage.setItem("tasks", JSON.stringify(tasks));
+
+}
+
+var loadTasks = function (){
+    var savedTasks = localStorage.getItem("tasks");
+
+    if (!tasks) {
+        tasks = [];
+        return false;
+    }
+
+    savedTasks = JSON.parse(savedTasks);
+
+    //loop through savedTasks array
+    for (var i=0; i< savedTasks.length; i++) {
+        //pass each task object into the 'createTaskEl()' function 
+        createTaskEl(savedTasks[i]);
+    }
 }
 
 
